@@ -5,6 +5,7 @@ import pprint
 import re
 import codecs
 import json
+import audit_clean
 """
 
 """
@@ -59,7 +60,11 @@ def shape_element(element):
             if len(splitk)==1 :#problem have not been used
                 node[splitk[0]]=tag.attrib['v']
             if 'addr' in tag.attrib['k'] and len(splitk)==2:
-                address[splitk[1]] = tag.attrib['v']#get the attr后de第一个参数，如果有两个以上的参数不成立
+                name = tag.attrib['v']
+                if splitk[1] == 'street':
+                    name = update_name(name, mapping)#更新有问题的数据
+
+                address[splitk[1]] = name#get the attr后de第一个参数，如果有两个以上的参数不成立
             
             #print address
 

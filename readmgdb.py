@@ -10,9 +10,10 @@ def range_query():
     # Modify the below line with your query.
     # You can use datetime(year, month, day) to specify date in the query
     #query = {'created.timestamp':{'$gt':"2017-01-01"}}
-    #query = {"amenity": "restaurant"}
+    #query = {"amenity": "fast_food"}
     #query = {"address.postcode": "21351"}
-    query = {"address.street": "竹箦镇"}
+    #query = {"address.street": "竹箦镇"}
+    query = {"name": "肯德基"}
     return query
 
 # Do not edit code below this line in the online code editor.
@@ -28,15 +29,15 @@ def aggregate(db, pipeline):
 if __name__ == "__main__":
     # For local use
     db = get_db()
-    for i in range(len(mapping)):
-        db.autos.update({'address.postcode':list(mapping.keys())[i]},{"$set":{' address.postcode ':list(mapping.values())[i]}},multi=True)
-    # query = range_query()
-    # autos = db.autos.find(query)
+    # for i in range(len(mapping)):
+    #     db.autos.update({'address.postcode':list(mapping.keys())[i]},{"$set":{' address.postcode ':list(mapping.values())[i]}},multi=True)
+    query = range_query()
+    autos = db.autos.find(query)
 
 
-    # print(autos.count())
-    # for i in autos:
-    #     print(i)
+    print(autos.count())
+    for i in autos:
+        print(i)
     # pipeline = [{"$match":{"amenity": "restaurant"}},
     # {"$group":{"_id":"$address.street","count":{"$sum":1}}},
     # {"$sort":{"count":-1}}
